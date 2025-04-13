@@ -47,7 +47,7 @@ struct ARViewContainer: UIViewRepresentable {
 
         @objc func handleTap(_ sender: UITapGestureRecognizer) {
             guard let arView = arView else { return }
-            hasTapped = true  // ✅ Hide overlay on first tap
+            hasTapped = true
 
 
             let tapLocation = sender.location(in: arView)
@@ -58,12 +58,10 @@ struct ARViewContainer: UIViewRepresentable {
                 return
             }
 
-            // Remove previous video
             if let existingAnchor = currentVideoAnchor {
                 arView.scene.anchors.remove(existingAnchor)
             }
 
-            // Load and play video
             guard let videoURL = Bundle.main.url(forResource: "LOR-E-P1", withExtension: "mp4") else {
                 print("Video not found.")
                 return
@@ -76,7 +74,6 @@ struct ARViewContainer: UIViewRepresentable {
             let mesh = MeshResource.generatePlane(width: 0.3, height: 0.3)
             let videoEntity = ModelEntity(mesh: mesh, materials: [videoMaterial])
 
-            // Face video outward from wall
             videoEntity.transform.rotation = simd_quatf(angle: -.pi / 2, axis: [1, 0, 0])
             videoEntity.position.z = 0.001
 
@@ -85,7 +82,6 @@ struct ARViewContainer: UIViewRepresentable {
             arView.scene.anchors.append(anchor)
             currentVideoAnchor = anchor
 
-            // Setup audio
             do {
                 try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
                 try AVAudioSession.sharedInstance().setActive(true)
@@ -93,7 +89,6 @@ struct ARViewContainer: UIViewRepresentable {
                 print("Audio session error: \(error)")
             }
 
-            // Delay spawning fish until after 16 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 16.0) {
                 // Start swordfish animation after delay
                 self.spawnFishStorm(around: arView)
@@ -119,15 +114,15 @@ struct ARViewContainer: UIViewRepresentable {
                 let x = cos(angle) * radius
                 let z = sin(angle) * radius
 
-                let baseY = Float.random(in: -1.0...1.0) // More vertical spacing
-                let y = baseY - 1.5                     // Shift all lower
+                let baseY = Float.random(in: -1.0...1.0)
+                let y = baseY - 1.5
 
                 let fish = fishModel.clone(recursive: true)
                 fish.position = SIMD3<Float>(x, y, z)
                 fish.look(at: .zero, from: fish.position, relativeTo: nil)
                 fish.setScale(SIMD3<Float>(0.0025, 0.0025, 0.0025), relativeTo: nil)
 
-                fish.name = "\(Float.random(in: 0...2 * .pi))" // wave phase
+                fish.name = "\(Float.random(in: 0...2 * .pi))"
                 centerAnchor.addChild(fish)
                 fishEntities.append(fish)
             }
