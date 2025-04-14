@@ -96,3 +96,8 @@ struct StoryView: View {
         }
     }
 }
+
+#Preview {
+    StoryView(language: .english)
+}
+
