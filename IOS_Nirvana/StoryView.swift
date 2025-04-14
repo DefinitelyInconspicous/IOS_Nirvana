@@ -14,7 +14,7 @@ struct StoryView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("The Story of Redhill")
+                Text(getStoryTitle(for: language))
                     .font(.title)
                     .bold()
 
@@ -28,7 +28,7 @@ struct StoryView: View {
                 }) {
                     HStack {
                         Spacer()
-                        Text("Explore in AR")
+                        Text(getAR(for: language))
                             .font(.title2)
                             .foregroundColor(.primary)
                             .padding()
@@ -69,4 +69,35 @@ struct StoryView: View {
             return "Pada zaman dahulu di Redhill, seorang budak lelaki yang kuat menyelamatkan kampungnya daripada serangan ikan todak. Raja takut akan kekuatannya dan memerintahkan dia dibunuh. Di tempat darahnya tumpah, muncul sebuah bukit merah. Itulah asal usul nama Redhill."
         }
     }
+    
+    func getAR(for language: Language) -> String {
+        switch language {
+        case .english:
+            return "Explore in AR"
+        case .chinese:
+            return "在 AR 中探索"
+        case .tamil:
+            return "AR இல் ஆராயுங்கள்"
+        case .malay:
+            return "Teroka dalam AR"
+        }
+    }
+    
+    func getStoryTitle(for language: Language) -> String {
+        switch language {
+        case .english:
+            return "The Story of Redhill"
+        case .chinese:
+            return "红山的故事"
+        case .tamil:
+            return "ரெட்ஹில்லின் கதை"
+        case .malay:
+            return "Kisah Redhill"
+        }
+    }
 }
+
+#Preview {
+    StoryView(language: .english)
+}
+
