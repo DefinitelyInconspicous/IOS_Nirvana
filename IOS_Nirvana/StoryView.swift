@@ -48,7 +48,7 @@ struct StoryView: View {
                 .buttonStyle(.plain)
                 .padding(.horizontal)
                 .fullScreenCover(isPresented: $showARView) {
-                    ARViewScreen()
+                    Game1view()
                 }
             }
             .padding()

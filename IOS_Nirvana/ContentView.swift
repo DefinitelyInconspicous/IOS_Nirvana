@@ -21,53 +21,68 @@ struct HomeView: View {
     @State private var selectedLanguage: Language? = nil
 
     var body: some View {
-        VStack(spacing: 20) {
-            Spacer(minLength: 30)
-
-            VStack(spacing: 8) {
-                Text("Choose a Language")
-                    .font(.largeTitle)
-                    .bold()
-                    .multilineTextAlignment(.center)
-
-                Text("Discover the legend of Redhill in your language")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-            }
-
-            Spacer()
-
-            ForEach(Language.allCases) { lang in
-                NavigationLink(value: lang) {
-                    HStack {
-                        Spacer()
-                        Text(lang.rawValue)
+        NavigationStack {
+            
+            VStack(spacing: 20) {
+                Spacer(minLength: 30)
+                
+                
+                VStack(spacing: 8) {
+                    Text("Choose a Language")
+                        .font(.largeTitle)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                    
+                    NavigationLink {
+                        Game1view()
+                    } label: {
+                        Text("Dev bypass")
                             .font(.title2)
                             .foregroundColor(.primary)
                             .padding()
-
-                        Spacer()
-
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.blue)
-                            .padding()
                     }
+                    .font(.title2)
+                    .foregroundColor(.white)
                     .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color(.systemGray6))
-                            
-                    )
+                    Text("Discover the legend of Redhill in your language")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
-                .buttonStyle(.plain)
-                .padding(.horizontal)
+                
+                Spacer()
+                
+                ForEach(Language.allCases) { lang in
+                    NavigationLink(value: lang) {
+                        HStack {
+                            Spacer()
+                            Text(lang.rawValue)
+                                .font(.title2)
+                                .foregroundColor(.primary)
+                                .padding()
+                            
+                            Spacer()
+                            
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.blue)
+                                .padding()
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(.systemGray6))
+                            
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+                }
+                
+                Spacer()
             }
-
-            Spacer()
-        }
-        .padding(.vertical)
-        .navigationDestination(for: Language.self) { language in
-            StoryView(language: language)
+            .padding(.vertical)
+            .navigationDestination(for: Language.self) { language in
+                StoryView(language: language)
+            }
         }
     }
 }
