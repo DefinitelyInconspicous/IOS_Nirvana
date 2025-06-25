@@ -28,7 +28,7 @@ struct StoryView: View {
                 }) {
                     HStack {
                         Spacer()
-                        Text("Explore in AR")
+                        Text("Explore")
                             .font(.title2)
                             .foregroundColor(.primary)
                             .padding()
@@ -48,7 +48,7 @@ struct StoryView: View {
                 .buttonStyle(.plain)
                 .padding(.horizontal)
                 .fullScreenCover(isPresented: $showARView) {
-                    Game1view()
+                    VideoView(language: .constant(language.rawValue))
                 }
             }
             .padding()

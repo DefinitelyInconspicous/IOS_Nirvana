@@ -15,17 +15,14 @@ struct Point: Hashable, Equatable {
 }
 
 enum GameColor: CaseIterable, Equatable {
-    case red, green, blue, yellow, purple, orange, cyan
+    case red, purple, blue, yellow
 
     var color: Color {
         switch self {
         case .red: .red
-        case .green: .green
         case .blue: .blue
         case .yellow: .yellow
         case .purple: .purple
-        case .orange: .orange
-        case .cyan: .cyan
         }
     }
 }
@@ -67,6 +64,7 @@ class GameViewModel: ObservableObject {
     @Published var currentPuzzleIndex = 0
     @Published var showTip: Bool = false
     @Published var currentTip: Tip? = nil
+    @Published var showOnboarding: Bool = true
 
     private var puzzles: [Puzzle]
     private var paths: [GameColor: [Point]] = [:]
@@ -77,9 +75,7 @@ class GameViewModel: ObservableObject {
     let tips: [GameColor: Tip] = [
         .red: Tip(title: "Red Tip Title", content: "Red tip content goes here."),
         .blue: Tip(title: "Blue Tip Title", content: "Blue tip content goes here."),
-        .green: Tip(title: "Green Tip Title", content: "Green tip content goes here."),
         .yellow: Tip(title: "Yellow Tip Title", content: "Yellow tip content goes here."),
-        .orange: Tip(title: "Orange Tip Title", content: "Orange tip content goes here."),
         .purple: Tip(title: "Purple Tip Title", content: "Purple tip content goes here.")
     ]
 
@@ -93,7 +89,7 @@ class GameViewModel: ObservableObject {
                 Point(row: 0, col: 3),
                 Point(row: 2, col: 3)
             ],
-            .green: [
+            .purple: [
                 Point(row: 3, col: 3),
                 Point(row: 3, col: 4),
                 Point(row: 0, col: 4),
@@ -333,8 +329,8 @@ class GameViewModel: ObservableObject {
                 Point(row: 4, col: 1): Node(color: .blue, type: .start),
                 Point(row: 2, col: 3): Node(color: .blue, type: .end),
 
-                Point(row: 3, col: 3): Node(color: .green, type: .start),
-                Point(row: 5, col: 0): Node(color: .green, type: .end),
+                Point(row: 3, col: 3): Node(color: .purple, type: .start),
+                Point(row: 5, col: 0): Node(color: .purple, type: .end),
 
                 Point(row: 0, col: 5): Node(color: .red, type: .start),
                 Point(row: 5, col: 1): Node(color: .red, type: .end),
@@ -457,6 +453,9 @@ struct Game1view: View {
                 TipView(tip: tip)
             }
         }
+        .sheet(isPresented: $viewModel.showOnboarding) {
+            OnboardingView()
+        }
     }
 }
 
@@ -491,8 +490,86 @@ struct TipView: View {
     }
 }
 
+struct OnboardingView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        VStack(spacing: 30) {
+            Text("Welcome to Redhill!")
+                .font(.largeTitle)
+                .bold()
+                .multilineTextAlignment(.center)
+                .padding(.top, 40)
+            
+            VStack(alignment: .leading, spacing: 20) {
+                OnboardingStep(
+                    number: 1,
+                    text: "Connect the correct villager and drag him to the correct tree! You cannot drag through trees, other villagers, or their paths! You can click on the villager to restart the path, and the restart button at the bottom to restart everything!"
+                )
+                
+                OnboardingStep(
+                    number: 2,
+                    text: "When you successfully bring a villager to their tree, you will receive a historical fact about Redhill!"
+                )
+                
+                OnboardingStep(
+                    number: 3,
+                    text: "Remember, you have to match the colours - but don't forget to drag the villager to the tree, and not the tree to the villager!"
+                )
+            }
+            .padding(.horizontal, 30)
+            
+            Spacer()
+            
+            Text("Good Luck!")
+                .font(.title2)
+                .bold()
+                .padding(.bottom, 20)
+            
+            Button("Let's Start!") {
+                dismiss()
+            }
+            .font(.title2)
+            .foregroundColor(.white)
+            .padding()
+            .background(Color.blue)
+            .cornerRadius(10)
+            .padding(.bottom, 40)
+        }
+        .background(Color(.systemBackground))
+    }
+}
+
+struct OnboardingStep: View {
+    let number: Int
+    let text: String
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 15) {
+            Text("\(number)")
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+                .frame(width: 30, height: 30)
+                .background(Color.blue)
+                .clipShape(Circle())
+            
+            Text(text)
+                .font(.body)
+                .multilineTextAlignment(.leading)
+            
+            Spacer()
+        }
+    }
+}
+
 struct GridCellView: View {
     let cell: GridCell
+    
+    private func findFile(type: String, Color: String) -> String {
+        print(Color + type)
+        return Color + type
+    }
     
     var body: some View {
         ZStack {
@@ -504,13 +581,15 @@ struct GridCellView: View {
             if let node = cell.node {
                 switch node.type {
                 case .start:
-                    Circle()
-                        .fill(node.color.color)
-                        .padding(8)
+                    let file = findFile(type: "ppl", Color: node.color.color.description)
+                    Image(file)
+                        .resizable()
+                        .frame(width: 150, height: 150)
                 case .end:
-                    Rectangle()
-                        .fill(node.color.color)
-                        .padding(8)
+                    let file = findFile(type: "tree", Color: node.color.color.description)
+                    Image(file)
+                        .resizable()
+                        .frame(width: 120, height: 120)
                 }
             }
         }

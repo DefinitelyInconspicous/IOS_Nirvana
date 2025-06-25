@@ -2,9 +2,9 @@ import SwiftUI
 
 enum Language: String, CaseIterable, Identifiable, Hashable {
     case english = "English"
-    case chinese = "中文"
-    case tamil = "தமிழ்"
-    case malay = "Bahasa Melayu"
+    case chinese = "Chinese"
+    case tamil = "Tamil"
+    case malay = "Malay"
 
     var id: String { self.rawValue }
 }
