@@ -9,16 +9,24 @@ import SwiftUI
 
 struct TipView: View {
     let tip: Tip
+    @Binding var language: String
+
     var body: some View {
-        VStack(spacing: 24) {
-            Text(tip.title)
-                .font(.title)
-                .bold()
+        VStack(spacing: 20) {
+            Image(systemName: tip.icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+                .foregroundColor(.primary)
+
+            Text(tip.localizedTitle(for: language))
+                .font(.headline)
+
+            Text(tip.localizedContent(for: language))
+                .multilineTextAlignment(.center)
                 .padding()
-            Text(tip.content)
-                .font(.body)
-            Spacer()
         }
         .padding()
     }
 }
+

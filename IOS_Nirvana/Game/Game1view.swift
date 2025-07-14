@@ -50,11 +50,20 @@ struct Puzzle {
     let endpoints: [Point: Node]
 }
 
-// MARK: - Tip Model
 struct Tip {
-    let title: String
-    let content: String
+    let icon: String
+    let title: [String: String]  // Language: Title
+    let content: [String: String]  // Language: Content
+
+    func localizedTitle(for language: String) -> String {
+        return title[language] ?? title["English"] ?? ""
+    }
+
+    func localizedContent(for language: String) -> String {
+        return content[language] ?? content["English"] ?? ""
+    }
 }
+
 
 // MARK: - ViewModel
 
@@ -71,11 +80,69 @@ class GameViewModel: ObservableObject {
     private var currentPath: [Point] = []
     private var currentPathColor: GameColor?
     let tips: [GameColor: Tip] = [
-        .red: Tip(title: "Red Tip Title", content: "Red tip content goes here."),
-        .blue: Tip(title: "Blue Tip Title", content: "Blue tip content goes here."),
-        .yellow: Tip(title: "Yellow Tip Title", content: "Yellow tip content goes here."),
-        .purple: Tip(title: "Purple Tip Title", content: "Purple tip content goes here.")
+        .red: Tip(
+            icon: "flame.fill",
+            title: [
+                "English": "Origin of the Name 'Redhill'",
+                "Chinese": "红山名字的由来",
+                "Malay": "Asal-usul Nama 'Redhill'",
+                "Tamil": "‘ரெட்ஹில்’ எனும் பெயரின் தோற்றம்"
+            ],
+            content: [
+                "English": "The name 'Redhill' comes from red soil seen after the tragic event.",
+                "Chinese": "“红山”的名字来源于悲剧事件后看到的红色泥土。",
+                "Malay": "Nama 'Redhill' berasal daripada tanah merah selepas kejadian tragis itu.",
+                "Tamil": "'ரெட்ஹில்' என்ற பெயர் ஒரு துயர நிகழ்வுக்குப் பிறகு காணப்பட்ட சிவப்பு மண்ணிலிருந்து வந்தது."
+            ]
+        ),
+        .blue: Tip(
+            icon: "sailboat.fill",
+            title: [
+                "English": "Connection to Maritime History",
+                "Chinese": "与海事历史的联系",
+                "Malay": "Kaitan dengan Sejarah Maritim",
+                "Tamil": "கடல் வரலாற்றுடன் உள்ள தொடர்பு"
+            ],
+            content: [
+                "English": "Redhill was once near a fishing village, important in maritime history.",
+                "Chinese": "红山曾靠近一个渔村，与海事历史密切相关。",
+                "Malay": "Redhill dahulunya berhampiran perkampungan nelayan, penting dalam sejarah maritim.",
+                "Tamil": "ரெட்ஹில் ஒரு மீனவர்கள் கிராமத்திற்கு அருகிலிருந்தது, கடல் வரலாற்றில் முக்கியமானது."
+            ]
+        ),
+        .yellow: Tip(
+            icon: "book.fill",
+            title: [
+                "English": "Symbolic Use in Education",
+                "Chinese": "教育中的象征意义",
+                "Malay": "Penggunaan Simbolik dalam Pendidikan",
+                "Tamil": "கல்வியில் பிரதிநிதித்துவ பயன்பாடு"
+            ],
+            content: [
+                "English": "The legend is used in schools to teach selflessness and vigilance.",
+                "Chinese": "这个传说在学校中用于教授无私和警觉。",
+                "Malay": "Legenda ini digunakan di sekolah untuk mengajar keikhlasan dan kewaspadaan.",
+                "Tamil": "தன்னலமின்மை மற்றும் விழிப்புணர்வை கற்றுத்தர இந்த கதையை பள்ளிகளில் பயன்படுத்துகின்றனர்."
+            ]
+        ),
+        .purple: Tip(
+            icon: "mountain.2.fill",
+            title: [
+                "English": "Geographic Shift of the Hill",
+                "Chinese": "山地的地理变化",
+                "Malay": "Perubahan Geografi Bukit",
+                "Tamil": "மலையின் புவியியல் மாற்றம்"
+            ],
+            content: [
+                "English": "The original Redhill was leveled during Singapore’s urban development.",
+                "Chinese": "原始的红山在新加坡城市发展中被夷平。",
+                "Malay": "Redhill asal diratakan semasa pembangunan bandar Singapura.",
+                "Tamil": "சிங்கப்பூரின் நகர வளர்ச்சியின் போது ஆரம்ப ரெட்ஹில் தட்டுவதாக மாறியது."
+            ]
+        )
     ]
+
+
     var solutionPaths: [GameColor: [Point]] {
         [
             .blue: [
@@ -444,16 +511,12 @@ struct Game1view: View {
             VideoView(language: .constant(language), part: .constant(2))
         }
         
-        .sheet(isPresented: $viewModel.showTip, onDismiss: {
-            viewModel.currentTip = nil
-        }) {
-            if showCompletionView == false {
-                
-                if let tip = viewModel.currentTip {
-                    TipView(tip: tip)
-                }
+        .sheet(isPresented: $viewModel.showTip) {
+            if let tip = viewModel.currentTip {
+                TipView(tip: tip, language: $language)
             }
         }
+
         
         
         .onChange(of: viewModel.showTip) { showTip in

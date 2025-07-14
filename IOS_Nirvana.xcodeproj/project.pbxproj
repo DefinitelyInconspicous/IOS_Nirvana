@@ -17,9 +17,6 @@
 				"Resources/Fonts/CaesarDressing-Regular.ttf" = (Fonts, );
 				"Resources/Fonts/Caveat-Bold.ttf" = (Fonts, );
 			};
-			membershipExceptions = (
-				"IOS-Nirvana-Info.plist",
-			);
 			target = CF2988BA2D62AB1D002C9C54 /* IOS_Nirvana */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
