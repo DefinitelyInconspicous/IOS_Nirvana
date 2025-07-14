@@ -10,9 +10,26 @@
 		CF2988BB2D62AB1E002C9C54 /* IOS_Nirvana.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS_Nirvana.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CFA326862E2533EB0036EA63 /* Exceptions for "IOS_Nirvana" folder in "IOS_Nirvana" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			assetTagsByRelativePath = {
+				"Resources/Fonts/CaesarDressing-Regular.ttf" = (Fonts, );
+				"Resources/Fonts/Caveat-Bold.ttf" = (Fonts, );
+			};
+			membershipExceptions = (
+				"IOS-Nirvana-Info.plist",
+			);
+			target = CF2988BA2D62AB1D002C9C54 /* IOS_Nirvana */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CF2988BD2D62AB1E002C9C54 /* IOS_Nirvana */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CFA326862E2533EB0036EA63 /* Exceptions for "IOS_Nirvana" folder in "IOS_Nirvana" target */,
+			);
 			path = IOS_Nirvana;
 			sourceTree = "<group>";
 		};
@@ -77,6 +94,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					Fonts,
+				);
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
@@ -255,6 +275,7 @@
 				DEVELOPMENT_TEAM = 42V9477C3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IOS-Nirvana-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Legend of Redhill";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera in order to display the AR Live Feed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -286,6 +307,7 @@
 				DEVELOPMENT_TEAM = 42V9477C3N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "IOS-Nirvana-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "The Legend of Redhill";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera in order to display the AR Live Feed.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

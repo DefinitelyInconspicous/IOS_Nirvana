@@ -48,7 +48,7 @@ struct StoryView: View {
                 .buttonStyle(.plain)
                 .padding(.horizontal)
                 .fullScreenCover(isPresented: $showARView) {
-                    VideoView(language: .constant(language.rawValue))
+                    VideoView(language: .constant(language.rawValue), part: .constant(1))
                 }
             }
             .padding()

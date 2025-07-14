@@ -32,18 +32,6 @@ struct HomeView: View {
                         .font(.largeTitle)
                         .bold()
                         .multilineTextAlignment(.center)
-                    
-                    NavigationLink {
-                        Game1view()
-                    } label: {
-                        Text("Dev bypass")
-                            .font(.title2)
-                            .foregroundColor(.primary)
-                            .padding()
-                    }
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .padding()
                     Text("Discover the legend of Redhill in your language")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
