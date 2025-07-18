@@ -4,8 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Resources/Fonts/CaesarDressing-Regular.ttf</string>
-		<string>Resources/Fonts/Caveat-Bold.ttf</string>
+		<string>CaesarDressing-Regular.ttf</string>
+		<string>Caveat-Bold.ttf</string>
 	</array>
 </dict>
 </plist>

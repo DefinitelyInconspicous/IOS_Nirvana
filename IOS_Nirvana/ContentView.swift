@@ -12,7 +12,7 @@ enum Language: String, CaseIterable, Identifiable, Hashable {
 struct ContentView: View {
     var body: some View {
         NavigationStack {
-            HomeView()
+            MainView()
         }
     }
 }

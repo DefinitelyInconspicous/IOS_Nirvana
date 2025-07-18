@@ -527,7 +527,7 @@ struct Game1view: View {
         }
         
         .sheet(isPresented: $viewModel.showOnboarding) {
-            OnboardingView()
+            OnboardingView(language: $language)
         }
     }
 }
