@@ -59,6 +59,9 @@ struct VideoView: View {
         .fullScreenCover(isPresented: $navigateToGame) {
             Game1view(language: .constant(language))
         }
+        .fullScreenCover(isPresented: $navigateToEnd) {
+            EndView()
+        }
     }
 }
 
